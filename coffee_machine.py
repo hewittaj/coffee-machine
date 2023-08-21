@@ -65,9 +65,8 @@ def run_coffee_machine():
             generate_report()
         if user_request in AVAILABLE_DRINKS:
             enough_resources = check_resources(user_request)
-        print(enough_resources)
-        print(f"test + {index}")
-        index += 1
+            if not enough_resources:
+                user_request = request_user_selection()
+                continue
 
         user_request = request_user_selection()
-        
