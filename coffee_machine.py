@@ -3,6 +3,21 @@ import json
 AVAILABLE_DRINKS = ['espresso', 'cappuccino', 'latte']
 
 
+def check_money_inserted(quarters, dimes, nickles, pennies, cost_of_drink):
+    """
+    Check if the money inserted into the machine is greater than or equal to the cost of coffee.
+    """
+    total_cash_deposited = (.25 * quarters) + (.1 * dimes) + (.05 * nickles) + (.01 * pennies)
+    if total_cash_deposited < cost_of_drink:
+        return False
+    if total_cash_deposited == cost_of_drink:
+        return True
+    elif total_cash_deposited > cost_of_drink:
+        change_amount = total_cash_deposited-cost_of_drink
+        print(f"Here is your ${change_amount} in change.")
+        return True
+
+
 def check_resources(drink_selected):
     """
     Check the available resources in the coffee machine.
@@ -35,6 +50,15 @@ def generate_report():
     print(f"Money: $%.2f" % round(available_resources['money'], 2))
 
 
+def get_drink_cost(selected_drink):
+    """
+    Return the cost of the drink selected by the user.
+    """
+    data = open_json("data.json")
+    drink_cost = data['recipes'][selected_drink]['money']
+    return drink_cost
+
+
 def open_json(file_name):
     """
     Helper function that opens up specified json file
@@ -42,6 +66,27 @@ def open_json(file_name):
     with open(file_name, 'r') as f:
         data = json.load(f)
     return data
+
+
+def request_money(selected_drink):
+    """
+    Ask the user to input money.
+    """
+    drink_cost = get_drink_cost(selected_drink)
+    enough_money = False
+
+    print("Please insert coins.")
+    quarters = int(input("how many quarters? "))
+    dimes = int(input("how many dimes? "))
+    nickles = int(input("how many nickles? "))
+    pennies = int(input("how many pennies? "))
+
+    enough_money = check_money_inserted(quarters, dimes, nickles, pennies, drink_cost)
+
+    if not enough_money:
+        print("Sorry, that's not enough money. Money refunded.")
+    elif enough_money:
+        print(f"Here is your {selected_drink}. Enjoy!")
 
 
 def request_user_selection():
@@ -68,5 +113,6 @@ def run_coffee_machine():
             if not enough_resources:
                 user_request = request_user_selection()
                 continue
+            request_money(selected_drink=user_request)
 
         user_request = request_user_selection()
