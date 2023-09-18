@@ -100,9 +100,7 @@ def run_coffee_machine():
     """
     Main code block to run coffee machine.
     """
-    # Variable declarations\
-    enough_resources = True
-    index = 0
+    # Variable declarations
     user_request = request_user_selection().lower()
 
     while user_request != 'off':
@@ -114,5 +112,28 @@ def run_coffee_machine():
                 user_request = request_user_selection()
                 continue
             request_money(selected_drink=user_request)
-
+            update_report(selected_drink=user_request)
         user_request = request_user_selection()
+
+
+def update_report(selected_drink):
+    data = open_json('data.json')
+
+    drink_cost = data['recipes'][selected_drink]['money']
+    drink_coffee_amount = data['recipes'][selected_drink]['coffee']
+    drink_milk_amount = data['recipes'][selected_drink]['milk']
+    drink_water_amount = data['recipes'][selected_drink]['water']
+
+    data['resources']['water'] = data['resources']['water'] - drink_water_amount
+    data['resources']['money'] = data['resources']['money'] - drink_cost
+    data['resources']['coffee'] = data['resources']['coffee'] - drink_coffee_amount
+    data['resources']['milk'] = data['resources']['milk'] - drink_milk_amount
+    write_json(data)
+
+
+def write_json(data):
+    """
+    Updates the json file with new values
+    """
+    with open("data.json", "w") as f:
+        json.dump(data, f, indent=4)

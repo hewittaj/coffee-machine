@@ -1,28 +1,28 @@
 {
-  "resources": {
-    "water": 500,
-    "milk": 500,
-    "coffee": 500,
-    "money": 500.00
-  },
-  "recipes": {
-    "espresso": {
-      "water": 50,
-      "milk": 0,
-      "coffee": 18,
-      "money": 1.5
+    "resources": {
+        "water": 350,
+        "milk": 490,
+        "coffee": 446,
+        "money": 495.5
     },
-    "cappuccino": {
-      "water": 250,
-      "milk": 100,
-      "coffee": 24,
-      "money": 3.0
-    },
-    "latte": {
-      "water": 200,
-      "milk": 150,
-      "coffee": 24,
-      "money": 2.5
+    "recipes": {
+        "espresso": {
+            "water": 50,
+            "milk": 10,
+            "coffee": 18,
+            "money": 1.5
+        },
+        "cappuccino": {
+            "water": 250,
+            "milk": 100,
+            "coffee": 24,
+            "money": 3.0
+        },
+        "latte": {
+            "water": 200,
+            "milk": 150,
+            "coffee": 24,
+            "money": 2.5
+        }
     }
-  }
 }
